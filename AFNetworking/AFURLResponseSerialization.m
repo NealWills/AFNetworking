@@ -253,7 +253,11 @@ id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions 
     NSError *serializationError = nil;
     
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:self.readingOptions error:&serializationError];
-
+                              
+    if (!responseObject) {
+        responseObject = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    }
+                              
     if (!responseObject)
     {
         if (error) {
